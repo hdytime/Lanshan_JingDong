@@ -17,6 +17,11 @@ func InitRouter() {
 		UserRouter.GET("/showhomepage", service.ShowHomepage)
 		UserRouter.POST("changehomepage", service.ChangeHomepage)
 	}
+	SellerRouter := r.Group("seller")
+	{
+		SellerRouter.Use(middleware.JWTAuthMiddleware())
+		SellerRouter.POST("uploadgoodsinformation", service.UploadGoodsInformation)
+	}
 	err := r.Run()
 	if err != nil {
 		fmt.Println("failed to run gin")
