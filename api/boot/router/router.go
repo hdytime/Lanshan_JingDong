@@ -16,6 +16,7 @@ func InitRouter() {
 		UserRouter.Use(middleware.JWTAuthMiddleware())
 		UserRouter.GET("/showhomepage", service.ShowHomepage)
 		UserRouter.POST("changehomepage", service.ChangeHomepage)
+		UserRouter.GET("/checkgoodsinformation", service.CheckGoodsInformation)
 	}
 	SellerRouter := r.Group("seller")
 	{

@@ -60,5 +60,26 @@ func UploadGoodsInformation(c *gin.Context) {
 		}
 		c.JSON(http.StatusOK, gin.H{"msg": "update goods information successfully"})
 	}
+}
 
+func CheckGoodsInformation(c *gin.Context) {
+	var goods model.Goods
+	err := c.ShouldBindJSON(&goods)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "failed to bind"})
+		return
+	}
+	flag := dao.SelectGoods(goods.Name, goods)
+	if !flag {
+		//没有对应商品
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "goods doesn`t exist"})
+		return
+	} else {
+		//有对应商品
+		global.MysqlDb.Where("name=?", goods.Name).First(&goods)
+		c.JSON(http.StatusOK, gin.H{
+			"name":  goods.Name,
+			"price": goods.Price,
+		})
+	}
 }
