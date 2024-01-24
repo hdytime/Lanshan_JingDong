@@ -12,3 +12,13 @@ func SelectGoods(name string, goods model.Goods) bool {
 	}
 	return true
 }
+
+func ChangeGoodsQuantity(name string) bool {
+	var goods model.Goods
+	global.MysqlDb.Where("name=?", name).First(&goods)
+	result := global.MysqlDb.Model(&model.Goods{}).Where("name=?", name).Update("quantity", goods.Quantity-1)
+	if result.Error != nil {
+		return false
+	}
+	return true
+}

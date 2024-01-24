@@ -15,13 +15,15 @@ func InitRouter() {
 	{
 		UserRouter.Use(middleware.JWTAuthMiddleware())
 		UserRouter.GET("/showhomepage", service.ShowHomepage)
-		UserRouter.POST("changehomepage", service.ChangeHomepage)
+		UserRouter.POST("/changehomepage", service.ChangeHomepage)
 		UserRouter.GET("/checkgoodsinformation", service.CheckGoodsInformation)
+		UserRouter.POST("/addcart", service.AddCart)
+		UserRouter.POST("/settlecart", service.SettleCart)
 	}
 	SellerRouter := r.Group("seller")
 	{
 		SellerRouter.Use(middleware.JWTAuthMiddleware())
-		SellerRouter.POST("uploadgoodsinformation", service.UploadGoodsInformation)
+		SellerRouter.POST("/uploadgoodsinformation", service.UploadGoodsInformation)
 	}
 	err := r.Run()
 	if err != nil {

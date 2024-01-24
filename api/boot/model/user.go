@@ -6,6 +6,7 @@ type User struct {
 	ID          uint    `gorm:"primaryKey;autoIncrement;not null'"`
 	Email       *string `json:"email" gorm:"default:null"`
 	PhoneNumber *uint   `json:"phone_number" gorm:"default:null"`
+	Money       float64 `json:"money"`
 }
 
 type UserInfo struct {
