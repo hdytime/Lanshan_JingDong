@@ -30,6 +30,15 @@ func UserRegister(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "transaction start failed"})
 		return
 	}
+	//密码加密
+	salt := dao.GenerateSalt()
+	passwordEncrypt, err := dao.PasswordEncrypt(user.Password, salt)
+	if err != nil {
+		global.Logger.Error("用户密码加密失败")
+		return
+	}
+	user.Password = passwordEncrypt
+	user.Salt = salt
 
 	result := global.MysqlDb.Create(&user)
 	if result.Error != nil {

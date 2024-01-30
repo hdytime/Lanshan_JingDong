@@ -7,6 +7,7 @@ type User struct {
 	Email       *string `json:"email" gorm:"default:null"`
 	PhoneNumber *uint   `json:"phone_number" gorm:"default:null"`
 	Money       float64 `json:"money"`
+	Salt        string  `json:"salt"`
 }
 
 type UserInfo struct {

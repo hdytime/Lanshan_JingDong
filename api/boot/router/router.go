@@ -20,7 +20,7 @@ func InitRouter() {
 		UserRouter.POST("/addcart", service.AddCart)
 		UserRouter.POST("/settlecart", service.SettleCart)
 	}
-	SellerRouter := r.Group("seller")
+	SellerRouter := r.Group("/seller")
 	{
 		SellerRouter.Use(middleware.JWTAuthMiddleware())
 		SellerRouter.POST("/uploadgoodsinformation", service.UploadGoodsInformation)

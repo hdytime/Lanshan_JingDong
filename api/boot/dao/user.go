@@ -31,11 +31,10 @@ func SelectUserInLogin(username string) bool {
 func JudgeUserInLogin(username string, password string) bool {
 	var user model.User
 	global.MysqlDb.Where("username=?", username).First(&user)
-	if password != user.Password {
-		return false
-	} else {
-		return true
-	}
+	publishedPassword := []byte(user.Salt + password)
+	password = string(publishedPassword)
+	flag := PasswordMatch(password, user.Password)
+	return flag
 }
 
 func SelectMoneyFromUser(c *gin.Context, username any) (money float64) {
