@@ -39,6 +39,8 @@ func UserRegister(c *gin.Context) {
 	}
 	user.Password = passwordEncrypt
 	user.Salt = salt
+	//用户默认给10000元
+	user.Money = 10000
 
 	result := global.MysqlDb.Create(&user)
 	if result.Error != nil {

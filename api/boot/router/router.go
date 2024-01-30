@@ -9,6 +9,7 @@ import (
 
 func InitRouter() {
 	r := gin.Default()
+	r.Use(middleware.CORS())
 	r.POST("/register", service.UserRegister)
 	r.POST("/login", service.UserLogin)
 	UserRouter := r.Group("/user")
