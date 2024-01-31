@@ -5,4 +5,5 @@ type Goods struct {
 	Name     string  `json:"name"`
 	Price    float64 `json:"price"`
 	Quantity uint    `json:"quantity"`
+	Reviews  string  `json:"reviews"`
 }

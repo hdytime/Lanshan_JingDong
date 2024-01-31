@@ -20,6 +20,7 @@ func InitRouter() {
 		UserRouter.GET("/checkgoodsinformation", service.CheckGoodsInformation)
 		UserRouter.POST("/addcart", service.AddCart)
 		UserRouter.POST("/settlecart", service.SettleCart)
+		UserRouter.GET("/researchgoods", service.ResearchGoods)
 	}
 	SellerRouter := r.Group("/seller")
 	{

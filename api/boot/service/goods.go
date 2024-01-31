@@ -90,3 +90,20 @@ func CheckGoodsInformation(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, goods)
 }
+
+func ResearchGoods(c *gin.Context) {
+	var goods model.Goods
+	err := c.ShouldBindJSON(&goods)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "failed to bind"})
+		return
+	}
+
+	result := global.MysqlDb.Where("name=?", goods.Name).First(&goods)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "没有此商品"})
+		return
+	}
+
+	c.JSON(http.StatusOK, goods)
+}
