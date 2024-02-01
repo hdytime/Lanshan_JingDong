@@ -6,7 +6,9 @@ import (
 	"Lanshan_JingDong/api/global"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
+	"gorm.io/gorm"
 	"net/http"
+	"strconv"
 )
 
 func UploadGoodsInformation(c *gin.Context) {
@@ -27,6 +29,8 @@ func UploadGoodsInformation(c *gin.Context) {
 
 	if !flag {
 		//没有对应商品
+		goods.GoodsID = dao.NewSnowflakeID()
+		goods.Reviews = 0
 		result := global.MysqlDb.Create(&goods)
 		if result.Error != nil {
 			tx.Rollback()
@@ -91,7 +95,7 @@ func CheckGoodsInformation(c *gin.Context) {
 	c.JSON(http.StatusOK, goods)
 }
 
-func ResearchGoods(c *gin.Context) {
+func SearchGoods(c *gin.Context) {
 	var goods model.Goods
 	err := c.ShouldBindJSON(&goods)
 	if err != nil {
@@ -106,4 +110,80 @@ func ResearchGoods(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, goods)
+}
+
+func ReviewGoods(c *gin.Context) {
+	tx := global.MysqlDb.Begin()
+	var goods model.Goods
+	err := c.ShouldBindJSON(&goods)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "failed to bind"})
+		return
+	}
+
+	var existingGoods model.Goods
+	result := global.MysqlDb.Where("name=?", goods.Name).First(&existingGoods)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "查询数据库失败"})
+		return
+	}
+	username, _ := c.Get("username")
+	reviews := model.Reviews{
+		GoodsID:  existingGoods.GoodsID,
+		Username: username.(string),
+		Content:  goods.Content,
+		Name:     existingGoods.Name,
+	}
+
+	flag := dao.CheckCommentPermission(username.(string), existingGoods.GoodsID)
+	if flag {
+		result := global.MysqlDb.Model(&model.Reviews{}).Create(&reviews)
+		if result.Error != nil {
+			tx.Rollback()
+			global.Logger.Error("添加评论到数据库失败")
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "评论失败"})
+			return
+		}
+
+		result = global.MysqlDb.Model(&model.Goods{}).Where("name=?", goods.Name).Update("reviews", gorm.Expr("reviews+?", 1))
+		if result.Error != nil {
+			tx.Rollback()
+			global.Logger.Error("更新评论数加一失败", zap.Error(result.Error))
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "评论失败"})
+			return
+		}
+
+		result = global.MysqlDb.Where("name=?", goods.Name).First(&existingGoods)
+
+		key := username.(string) + "-" + strconv.FormatInt(existingGoods.GoodsID, 10)
+		err = global.RedisDb.Set(global.Ctx, key, 1, 0).Err()
+		if err != nil {
+			tx.Rollback()
+			global.Logger.Error("用户商品对应关系写入redis失败")
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "评论失败"})
+			return
+		}
+		c.JSON(http.StatusOK, gin.H{"msg": "评论成功"})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"msg": "你未购买该商品或已经评论过该商品"})
+		return
+	}
+}
+
+func CheckGoodsReviews(c *gin.Context) {
+	var reviews []model.Reviews
+	var goods model.Goods
+	err := c.ShouldBindJSON(&goods)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "failed to bind"})
+		return
+	}
+	tx := global.MysqlDb.Begin()
+	result := global.MysqlDb.Model(&model.Reviews{}).Where("name=?", goods.Name).Find(&reviews)
+	if result.Error != nil {
+		tx.Rollback()
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "查询商品评论失败"})
+		return
+	}
+	c.JSON(http.StatusOK, reviews)
 }

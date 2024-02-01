@@ -20,7 +20,9 @@ func InitRouter() {
 		UserRouter.GET("/checkgoodsinformation", service.CheckGoodsInformation)
 		UserRouter.POST("/addcart", service.AddCart)
 		UserRouter.POST("/settlecart", service.SettleCart)
-		UserRouter.GET("/researchgoods", service.ResearchGoods)
+		UserRouter.GET("/searchgoods", service.SearchGoods)
+		UserRouter.POST("/reviewgoods", service.ReviewGoods)
+		UserRouter.GET("/checkgoodsreviews", service.CheckGoodsReviews)
 	}
 	SellerRouter := r.Group("/seller")
 	{
@@ -32,5 +34,4 @@ func InitRouter() {
 		fmt.Println("failed to run gin")
 		return
 	}
-
 }

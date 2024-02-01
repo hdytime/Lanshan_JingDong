@@ -42,10 +42,10 @@ func AddCart(c *gin.Context) {
 }
 
 func SettleCart(c *gin.Context) {
-	var cart model.Cart
-	err := c.ShouldBindJSON(&cart)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "failed to bind"})
+	cart := dao.GetCartInformation(c)
+	if cart.Name == "" {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "你的购物车空空如也~"})
+		c.Abort()
 		return
 	}
 	price := dao.GetPriceFromGoods(c, cart.Name)
@@ -56,7 +56,8 @@ func SettleCart(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"msg": "don`t have enough money"})
 		return
 	} else {
-		dao.SettleCartInformation(c, cart.Name)
+		dao.SettleCartInformation(c, cart.Name, username.(string))
+		dao.DeductMoneyFromUser(c, cart.Name, username.(string))
 		flag := dao.ChangeGoodsQuantity(cart.Name)
 		if !flag {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to change goods quantity"})

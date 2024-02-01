@@ -3,6 +3,7 @@ package dao
 import (
 	"Lanshan_JingDong/api/boot/model"
 	"Lanshan_JingDong/api/global"
+	"strconv"
 )
 
 func SelectGoods(name string, goods model.Goods) bool {
@@ -21,4 +22,17 @@ func ChangeGoodsQuantity(name string) bool {
 		return false
 	}
 	return true
+}
+
+func CheckCommentPermission(username string, goodsId int64) bool {
+	key := username + "-" + strconv.FormatInt(goodsId, 10)
+	value, err := global.RedisDb.Get(global.Ctx, key).Result()
+	if err != nil {
+		//没有对应记录即未购买过该商品
+		return false
+	} else if value == "0" {
+		return true
+	} else {
+		return false
+	}
 }
