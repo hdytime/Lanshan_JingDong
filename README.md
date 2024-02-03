@@ -90,7 +90,7 @@
 
 运用**用户名-商品id**作为**key**，**不同**的**value**来表示用户评论状态，0表示用户已购买商品未评论该商品，1表示购买也评论过该商品。
 
-![image-20240203123203618](C:\Users\hdytime\AppData\Roaming\Typora\typora-user-images\image-20240203123203618.png)
+![image-20240203123203618](https://github.com/hdytime/Lanshan_JingDong/blob/master/images/image-20240203123203618.png)
 
 - **商品序列号使用雪花算法生成**
 
