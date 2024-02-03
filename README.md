@@ -18,37 +18,37 @@
 
 ------
 
-<img src="E:\DOWNLOAD\color.png" style="zoom: 10%;" />
+<img src="https://github.com/hdytime/Lanshan_JingDong/blob/master/images/color.png" style="zoom: 10%;" />
 
 - [Gin](https://gin-gonic.com/zh-cn/)
 
 > Gin 是一个用 Go (Golang) 编写的 HTTP Web 框架。 它具有类似 Martini 的 API，但性能比 Martini 快 40 倍。如果你需要极好的性能，使用 Gin 吧。
 
-<img src="E:\DOWNLOAD\R.png" style="zoom:7%;" />
+<img src="https://github.com/hdytime/Lanshan_JingDong/blob/master/images/R.png" style="zoom:7%;" />
 
 - [MySQL](https://www.mysql.com/)
 
 > 一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，属于 Oracle 旗下产品。MySQL 是最流行的关系型数据库管理系统关系型数据库管理系统之一，在 WEB 应用方面，MySQL是最好的 RDBMS (Relational Database Management System，关系数据库管理系统) 应用软件之一
 
-<img src="E:\DOWNLOAD\redis-1536x864.jpg" style="zoom:20%;" />
+<img src="https://github.com/hdytime/Lanshan_JingDong/blob/master/images/redis-1536x864.jpg" style="zoom:20%;" />
 
 - [Redis](https://redis.io/)
 
 > Redis（Remote Dictionary Server）是一个使用[ANSI C](https://zh.wikipedia.org/wiki/ANSI_C)编写的[开源](https://zh.wikipedia.org/wiki/开源)、支持[网络](https://zh.wikipedia.org/wiki/电脑网络)、基于[内存](https://zh.wikipedia.org/wiki/内存)、[分布式](https://zh.wikipedia.org/wiki/分布式缓存)、可选[持久性](https://zh.wikipedia.org/wiki/持久性)的[键值对存储数据库](https://zh.wikipedia.org/wiki/键值-值数据库)。
 
-<img src="E:\DOWNLOAD\gorm.png" style="zoom:10%;" />
+<img src="https://github.com/hdytime/Lanshan_JingDong/blob/master/images/gorm.png" style="zoom:10%;" />
 
 - [GORM](https://gorm.io/zh_CN/docs/index.html)
 
 > The fantastic ORM library for Golang aims to be developer friendly.
 
-<img src="E:\DOWNLOAD\logo.png" style="zoom:25%;" />
+<img src="https://github.com/hdytime/Lanshan_JingDong/blob/master/images/logo.png" style="zoom:25%;" />
 
 - [Viper](https://link.zhihu.com/?target=https%3A//github.com/spf13/viper)
 
 > Viper是适用于Go应用程序的完整配置解决方案。它被设计用于在应用程序中工作，并且可以处理所有类型的配置需求和格式。
 
-<img src="E:\DOWNLOAD\logo (1).png" style="zoom: 33%;" />
+<img src="https://github.com/hdytime/Lanshan_JingDong/blob/master/images/logo (1).png" style="zoom: 33%;" />
 
 - [zap](https://github.com/uber-go/zap)
 
