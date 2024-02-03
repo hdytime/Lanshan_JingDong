@@ -86,7 +86,7 @@
 
 - **Redis中key-value设计**
 
-![image-20240203122456867](C:\Users\hdytime\AppData\Roaming\Typora\typora-user-images\image-20240203122456867.png)
+![image-20240203122456867](https://github.com/hdytime/Lanshan_JingDong/blob/master/images/image-20240203122456867.png)
 
 运用**用户名-商品id**作为**key**，**不同**的**value**来表示用户评论状态，0表示用户已购买商品未评论该商品，1表示购买也评论过该商品。
 
@@ -103,7 +103,7 @@
 3. **不依赖第三方系统。** 雪花算法的生成方式，不依赖第三方系统或[中间件](https://www.zhihu.com/search?q=中间件&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"answer"%2C"sourceId"%3A2649891559})，因此其稳定性较高。
 4. **解决了安全问题。** 雪花算法生成的 ID 是单调递增的，但其递增步长又不是确定的，因此无法从 ID 的差值推断出生成的数量，从而可以保护业务隐私。
 
-![image-20240203123523170](C:\Users\hdytime\AppData\Roaming\Typora\typora-user-images\image-20240203123523170.png)
+![image-20240203123523170](https://github.com/hdytime/Lanshan_JingDong/blob/master/images/image-20240203123523170.png)
 
 - **用户密码加盐加密**
 
@@ -111,7 +111,7 @@
 
 BCrypt加密： 一种加盐的单向Hash，不可逆的加密算法，同一种明文（plaintext），每次加密后的密文都不一样，而且不可反向破解生成明文，破解难度很大。
 
-![image-20240203165255430](C:\Users\hdytime\AppData\Roaming\Typora\typora-user-images\image-20240203165255430.png)
+![image-20240203165255430](https://github.com/hdytime/Lanshan_JingDong/blob/master/images/image-20240203165255430.png)
 
 加盐加密的几个好处：
 
@@ -124,7 +124,7 @@ BCrypt加密： 一种加盐的单向Hash，不可逆的加密算法，同一种
 
 > JWT（JSON Web Token）是一种用于认证和授权的开放标准。它是一种基于JSON的安全传输机制，通过在网络中传递签名的令牌来验证和授权用户访问资源。
 
-<img src="E:\DOWNLOAD\jwt.png" style="zoom:25%;" />
+<img src="https://github.com/hdytime/Lanshan_JingDong/blob/master/images/jwt.png" style="zoom:25%;" />
 
 JWT的优点包括：
 
@@ -132,4 +132,3 @@ JWT的优点包括：
 2. **去中心化**：JWT是无状态的，不需要在服务器端存储会话信息。服务器可以基于每个请求中的JWT完成认证和授权。
 3. **安全性**：JWT使用数字签名验证令牌的完整性，确保令牌在传输过程中不被篡改或伪造。
 4. **扩展性**：JWT的声明部分可以自由定制，可以包含任意的用户信息和其他相关信息。
-
